@@ -10,7 +10,7 @@ class UsersController extends Controller
 {
     public function __construct(){
         $this->middleware('auth',[
-            'except' => ['show','create', 'store']
+            'except' => ['show','create', 'store','index']
         ]);
 
         $this->middleware('guest',[
@@ -53,6 +53,7 @@ class UsersController extends Controller
         return view('users.edit',compact('user'));
     }
 
+    //修改个人信息
     public function update(User $user,Request $request){
         $this->authorize('update', $user);
         $this->validate($request,[
@@ -67,5 +68,12 @@ class UsersController extends Controller
         $user->update($data);
         session()->flash('success','个人资料修改成功');
         return redirect()->route('users.show',$user);
+    }
+
+    //用户列表
+    public function index(){
+        $users = User::paginate(5);
+        // $users = User::all();
+        return view('users.index', compact('users'));
     }
 }
