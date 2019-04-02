@@ -52,14 +52,14 @@ class User extends Authenticatable
         return $this->statuses()->orderBy('created_at','desc');
     }
 
-    //获取粉丝列表（关注自己的用户）
+    //获取粉丝列表（关注我的人）
     public function followers()
     {
         return $this->belongsToMany(User::Class, 'followers', 'user_id', 'follower_id');
     }
 
     /**
-     * [followings 获取用户列表（关注这个粉丝的用户）]
+     * [followings 获取用户列表（我关注的人）]
      * @return [type] [description]
      */
     public function followings()
